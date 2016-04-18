@@ -18,8 +18,9 @@ CFLAGS += -nostartfiles
 LFLAGS += -T rpi.x
 LFLAGS += -nostartfiles
 
-CFLAGS += -O1
-DEBUG_CFLAGS += -g
+#CFLAGS += -01
+CFLAGS += -O4
+CFLAGS += -g
 
 RELEASE_CFLAGS += -O4
 
@@ -48,9 +49,12 @@ vpath %.c $(SOURCE_DIR)
 vpath %.S $(SOURCE_DIR)
 
 
-.PHONY: all checkdirs clean
+.PHONY: all doc checkdirs clean
 
 all: checkdirs $(IMG) tags
+
+doc:
+	doxygen
 
 tags:
 	ctags -R src/
@@ -63,12 +67,12 @@ $(ELF): $(C_OBJ) $(S_OBJ)
 
 
 define make-goal-c
-$1/%.c.o: %.c $(H_SOURCE)
+$1/%.c.o: %.c $(H_SOURCE) Makefile
 	$(CROSS_COMPILE)gcc $(CFLAGS) -c -o $$@ $$<
 endef
 
 define make-goal-s
-$1/%.S.o: %.S
+$1/%.S.o: %.S Makefile
 	$(CROSS_COMPILE)gcc $(CFLAGS) -c -o $$@ $$<
 endef
 
@@ -79,6 +83,7 @@ $(BUILD_DIR):
 
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -f $(ELF) $(IMG)
 
 $(foreach bdir,$(BUILD_DIR),$(eval $(call make-goal-c,$(bdir))))
 
