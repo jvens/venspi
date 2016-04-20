@@ -228,7 +228,7 @@ TAB_SIZE               = 4
 # "Side Effects:". You can put \n's in the value part of an alias to insert
 # newlines.
 
-ALIASES                = bits=<dl> \
+ALIASES                = "bits=@par Bits\n<dl>" \
                          endbits=</dl> \
                          bitn{1}=<dt>\<\1\></dt> \
                          bit=<dd> \
@@ -352,7 +352,7 @@ DISTRIBUTE_GROUP_DOC   = NO
 # is disabled and one has to add nested compounds explicitly via \ingroup.
 # The default value is: NO.
 
-GROUP_NESTED_COMPOUNDS = YES
+GROUP_NESTED_COMPOUNDS = NO
 
 # Set the SUBGROUPING tag to YES to allow class member groups of the same type
 # (for instance a group of public functions) to be put as a subgroup of that
